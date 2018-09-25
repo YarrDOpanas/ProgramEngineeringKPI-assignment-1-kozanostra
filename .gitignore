@@ -1,6 +1,7 @@
 #ignore all files
 *
-#except 
+#except
+!*/ 
 !*.txt
-!*/
 !.gitignore
+!Dockerfile
