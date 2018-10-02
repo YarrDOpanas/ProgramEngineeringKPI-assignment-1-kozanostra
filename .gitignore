@@ -1,0 +1,16 @@
+#ignore all files
+*
+#except
+!*/
+!*.gitignore
+!*.dockerignore
+!Dockerfile
+!*.py
+!*.ipynb
+!*.txt
+!*.md
+!*.json
+!*.yml
+!*.sh
+!*.env
+!*.html
