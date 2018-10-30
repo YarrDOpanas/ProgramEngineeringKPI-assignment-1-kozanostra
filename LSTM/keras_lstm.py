@@ -110,16 +110,20 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 
 hidden_size = 500
 use_dropout=True
-model = Sequential()
-model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
-model.add(LSTM(hidden_size, return_sequences=True))
-model.add(LSTM(hidden_size, return_sequences=True))
-if use_dropout:
-    model.add(Dropout(0.5))
-model.add(TimeDistributed(Dense(vocabulary)))
-model.add(Activation('softmax'))
+with tf.device("/cpu:0"):
+	# initialize the model
+    	model = Sequential()
+	model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
+	model.add(LSTM(hidden_size, return_sequences=True))
+	model.add(LSTM(hidden_size, return_sequences=True))
+	if use_dropout:
+    	model.add(Dropout(0.5))
+	model.add(TimeDistributed(Dense(vocabulary)))
+	model.add(Activation('softmax'))
+# make the model parallel
+model = multi_gpu_model(model, gpus=4)
 
-optimizer = Adam()
+otimizer = Adam()
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
 
 print(model.summary())
