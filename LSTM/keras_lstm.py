@@ -12,6 +12,7 @@ from keras.callbacks import ModelCheckpoint
 import numpy as np
 import argparse
 import pdb
+from keras.utils.training_utils import multi_gpu_model
 
 """To run this code, you'll need to first download and extract the text dataset
     from here: http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz. Change the
