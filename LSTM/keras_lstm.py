@@ -112,10 +112,10 @@ hidden_size = 500
 use_dropout=True
 with tf.device("/cpu:0"):
 	# initialize the model
-    	model = Sequential()
-	model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
-	model.add(LSTM(hidden_size, return_sequences=True))
-	model.add(LSTM(hidden_size, return_sequences=True))
+    model = Sequential()
+    model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
+    model.add(LSTM(hidden_size, return_sequences=True))
+    model.add(LSTM(hidden_size, return_sequences=True))
 	if use_dropout:
     	model.add(Dropout(0.5))
 	model.add(TimeDistributed(Dense(vocabulary)))
