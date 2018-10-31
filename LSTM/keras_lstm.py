@@ -12,7 +12,7 @@ from keras.callbacks import ModelCheckpoint
 import numpy as np
 import argparse
 import pdb
-from keras.utils.training_utils import multi_gpu_model
+#from keras.utils.training_utils import multi_gpu_model
 
 """To run this code, you'll need to first download and extract the text dataset
     from here: http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz. Change the
@@ -111,18 +111,18 @@ valid_data_generator = KerasBatchGenerator(valid_data, num_steps, batch_size, vo
 
 hidden_size = 500
 use_dropout=True
-with tf.device("/cpu:0"):
+#with tf.device("/cpu:0"):
 	# initialize the model
-    model = Sequential()
-    model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
-    model.add(LSTM(hidden_size, return_sequences=True))
-    model.add(LSTM(hidden_size, return_sequences=True))
-    if use_dropout:
-        model.add(Dropout(0.5))
-    model.add(TimeDistributed(Dense(vocabulary)))
-    model.add(Activation('softmax'))
+model = Sequential()
+model.add(Embedding(vocabulary, hidden_size, input_length=num_steps))
+model.add(LSTM(hidden_size, return_sequences=True))
+model.add(LSTM(hidden_size, return_sequences=True))
+if use_dropout:
+    model.add(Dropout(0.5))
+model.add(TimeDistributed(Dense(vocabulary)))
+model.add(Activation('softmax'))
 # make the model parallel
-model = multi_gpu_model(model, gpus=4)
+#model = multi_gpu_model(model, gpus=4)
 
 otimizer = Adam()
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
